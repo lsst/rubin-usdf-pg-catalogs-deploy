@@ -1,0 +1,26 @@
+
+resources:
+- ns.yaml
+- cnpg-database.yaml
+- cnpg-pooler.yaml
+#- cnpg-pooler-service.yaml
+
+#patches:
+#- endpoints-patch.yaml
+
+secretGenerator:
+- name: dp03-creds
+  options:
+    disableNameSuffixHash: true
+  files:
+  - etc/.secrets/username
+  - etc/.secrets/password
+#- name: s3-creds
+#  options:
+#    disableNameSuffixHash: true
+#  files:
+#  - ACCESS_KEY_ID=etc/.secrets/client-id
+#  - ACCESS_SECRET_KEY=etc/.secrets/client-secret
+
+namespace: dp03
+

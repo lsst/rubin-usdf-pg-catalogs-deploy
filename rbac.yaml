@@ -26,6 +26,9 @@ subjects:
 - kind: User
   name: dspeck@slac.stanford.edu
   apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: pav@slac.stanford.edu
+  apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
   name: cluster-admin

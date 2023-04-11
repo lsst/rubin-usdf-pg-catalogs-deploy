@@ -2,10 +2,10 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Pooler
 metadata:
-  name: usdf-butler-pooler-rw
+  name: dp03-pooler-rw
 spec:
   cluster:
-    name: usdf-butler
+    name: dp03
   instances: 3
   type: rw
 
@@ -61,11 +61,11 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Pooler
 metadata:
-  name: usdf-butler-pooler-ro
+  name: dp03-pooler-ro
 spec:
   cluster:
-    name: usdf-butler
-  instances: 3
+    name: dp03
+  instances: 1
   type: ro
 
   pgbouncer:
@@ -118,10 +118,10 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Pooler
 metadata:
-  name: usdf-butler-pooler-transaction-rw
+  name: dp03-pooler-transaction-rw
 spec:
   cluster:
-    name: usdf-butler
+    name: dp03
   instances: 3
   type: rw
 
