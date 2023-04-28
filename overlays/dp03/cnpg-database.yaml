@@ -13,18 +13,18 @@ spec:
       owner: dp03
       secret:
         name: dp03-creds
-# backup:
-#   retentionPolicy: "15d"
-#   barmanObjectStore:
-#     destinationPath: s3://rubin-usdf-butler
-#     endpointURL: https://s3dfrgw.slac.stanford.edu
-#     s3Credentials:
-#       accessKeyId:
-#         name: s3-creds
-#         key: ACCESS_KEY_ID
-#       secretAccessKey:
-#         name: s3-creds
-#         key: ACCESS_SECRET_KEY
+  backup:
+   retentionPolicy: "15d"
+   barmanObjectStore:
+     destinationPath: s3://rubin-usdf-pg-catalogs
+     endpointURL: https://s3dfrgw.slac.stanford.edu
+     s3Credentials:
+       accessKeyId:
+         name: s3-creds
+         key: ACCESS_KEY_ID
+       secretAccessKey:
+         name: s3-creds
+         key: ACCESS_SECRET_KEY
 
   imageName: lsstsqre/cloudnative-pg:14.4
   inheritedMetadata:

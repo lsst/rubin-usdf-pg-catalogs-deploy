@@ -1,10 +1,10 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: usdf-butler2-backup
+  name: dp03
 spec:
   immediate: true
-  schedule: "0 0 0 * * *"
+  schedule: "0 4 * * *"
   backupOwnerReference: self
   cluster:
-    name: usdf-butler2
+    name: dp03
