@@ -26,7 +26,7 @@ spec:
 #         name: s3-creds
 #         key: ACCESS_SECRET_KEY
 
-  imageName: lsstsqre/cloudnative-pg:14
+  imageName: lsstsqre/cloudnative-pg:14.4
   inheritedMetadata:
     annotations:
       prometheus.io/scrape: 'true'
@@ -65,6 +65,6 @@ spec:
 
   storage:
     storageClass: wekafs--sdf-k8s01
-    size: 1000Gi
+    size: 2000Gi
 
 
