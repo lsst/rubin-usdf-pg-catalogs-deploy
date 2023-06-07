@@ -1,0 +1,99 @@
+
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: dp03-replica
+  namespace: dp03-replica
+spec:
+  affinity:
+    podAntiAffinityType: preferred
+    topologyKey: ""
+  bootstrap:
+    pg_basebackup:
+      database: ""
+      owner: ""
+      source: usdf-cluster
+  enableSuperuserAccess: true
+  externalClusters:
+  - connectionParameters:
+      host: 134.79.23.207
+      user: postgres
+    name: usdf-cluster
+    password:
+      key: password
+      name: dp03-usdf-superuser 
+  failoverDelay: 0
+  imageName: lsstsqre/cloudnative-pg:14.4
+  inheritedMetadata:
+    annotations:
+      prometheus.io/scrape: "true"
+  instances: 2
+  logLevel: info
+  maxSyncReplicas: 0
+  minSyncReplicas: 0
+  monitoring:
+    customQueriesConfigMap:
+    - key: queries
+      name: cnpg-default-monitoring
+    disableDefaultQueries: false
+    enablePodMonitor: true
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
+  postgresGID: 26
+  postgresUID: 26
+  postgresql:
+    parameters:
+      archive_mode: "on"
+      archive_timeout: 5min
+      dynamic_shared_memory_type: posix
+      log_destination: csvlog
+      log_directory: /controller/log
+      log_disconnections: "on"
+      log_duration: "on"
+      log_filename: postgres
+      log_min_duration_statement: 250ms
+      log_rotation_age: "0"
+      log_rotation_size: "0"
+      log_statement: all
+      log_temp_files: "1"
+      log_truncate_on_rotation: "false"
+      logging_collector: "on"
+      maintenance_work_mem: 2GB
+      max_connections: "1000"
+      max_parallel_workers: "32"
+      max_replication_slots: "32"
+      max_wal_size: 16GB
+      max_worker_processes: "32"
+      min_wal_size: 4GB
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: all
+      random_page_cost: "1.1"
+      shared_buffers: 16GB
+      shared_memory_type: mmap
+      shared_preload_libraries: ""
+      wal_keep_size: 512MB
+      wal_receiver_timeout: 5s
+      wal_sender_timeout: 5s
+      work_mem: 160MB
+    syncReplicaElectionConstraint:
+      enabled: false
+  primaryUpdateMethod: switchover
+  primaryUpdateStrategy: unsupervised
+  replica:
+    enabled: true
+    source: usdf-cluster
+  resources:
+    limits:
+      cpu: "16"
+      memory: 64Gi
+    requests:
+      cpu: "4"
+      memory: 16Gi
+  startDelay: 30
+  stopDelay: 30
+  storage:
+    resizeInUseVolumes: true
+    size: 2000Gi
+    storageClass: premium-rwo
+  switchoverDelay: 40000000

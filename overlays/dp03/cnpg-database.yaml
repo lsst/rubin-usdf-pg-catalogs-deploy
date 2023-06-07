@@ -54,6 +54,9 @@ spec:
       random_page_cost: "1.1"
       shared_buffers: 16GB
       work_mem: 160MB
+    pg_hba:
+    - host replication postgres all md5
+    - host replicatiom postgres all scram-sha-256
 
   resources:
     requests:
