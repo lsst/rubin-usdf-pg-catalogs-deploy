@@ -8,6 +8,18 @@ spec:
   affinity:
     podAntiAffinityType: preferred
     topologyKey: ""
+  backup:
+   retentionPolicy: "15d"
+   barmanObjectStore:
+     destinationPath: "gs://dp03-backup"
+     googleCredentials:
+        applicationCredentials:
+          name: backup-key
+          key: key.json
+  serviceAccountTemplate:
+    metadata:
+      annotations:
+        iam.gke.io/gcp-service-account: dp03-backup@dp03-db.iam.gserviceaccount.com
   bootstrap:
     pg_basebackup:
       database: ""
@@ -81,7 +93,7 @@ spec:
   primaryUpdateMethod: switchover
   primaryUpdateStrategy: unsupervised
   replica:
-    enabled: true
+    enabled: false
     source: usdf-cluster
   resources:
     limits:
