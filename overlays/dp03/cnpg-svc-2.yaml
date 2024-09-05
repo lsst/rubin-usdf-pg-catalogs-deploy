@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/address-pool: sdf-dmz
+  name: dp03-pooler-rw
+  namespace: dp03
+spec:
+  allocateLoadBalancerNodePorts: true
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  loadBalancerIP: 134.79.23.202
+  ports:
+  - name: pgbouncer
+    nodePort: 30426
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    cnpg.io/poolerName: dp03-pooler2-rw
+  sessionAffinity: None
+  type: LoadBalancer
