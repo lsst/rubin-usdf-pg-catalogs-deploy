@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dp03-2-pooler-gcp-access-session
+  namespace: dp03
+  annotations:
+    metallb.universe.tf/address-pool: sdf-dmz
+spec:
+  loadBalancerSourceRanges:
+  - 35.232.79.62/32
+  - 34.135.212.179/32
+  - 35.225.239.81/32
+  allocateLoadBalancerNodePorts: true
+  ports:
+  - name: pgbouncer
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    cnpg.io/poolerName: dp03-2-pooler-gcp-access-session
+  type: LoadBalancer

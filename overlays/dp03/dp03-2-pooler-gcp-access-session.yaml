@@ -1,0 +1,54 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: dp03-2-pooler-gcp-access-session
+  namespace: dp03
+spec:
+  cluster:
+    name: dp03-2
+  instances: 3
+  type: rw
+
+  pgbouncer:
+    poolMode: session
+    parameters:
+      max_client_conn: "1000"
+      default_pool_size: "500"
+      log_connections: "1"
+      log_disconnections: "1"
+      idle_transaction_timeout: "0"
+      server_idle_timeout: "0"
+      tcp_keepalive: "1"
+      tcp_keepcnt: "1"
+      tcp_keepidle: "1"
+      tcp_keepintvl: "1"
+      tcp_user_timeout: "21600"
+
+  template:
+    metadata:
+      labels:
+        app: pooler-session
+      annotations:
+        prometheus.io/scrape: 'true'
+    
+    spec:
+      containers:
+      - name: pgbouncer
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: 100Mi
+          limits:
+            cpu: "0.5"
+            memory: 500Mi
+
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - pooler-transaction
+            topologyKey: "kubernetes.io/hostname"
